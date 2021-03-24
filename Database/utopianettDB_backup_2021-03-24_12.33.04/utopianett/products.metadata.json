@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"utopianett.products"}],"uuid":"801e79c62cd440c1bc8c3cab57a05991"}
