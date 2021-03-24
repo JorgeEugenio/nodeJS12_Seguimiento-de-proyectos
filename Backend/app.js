@@ -17,7 +17,8 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 //app.use('/v1',productsRoutes)
-app.use('/v1',principalRoute)
+app.use('/',principalRoute)
+//app.use('/v1',principalRoute)
 
 app.use('/public', express.static(`${__dirname}/storage/imgs/`))
 module.exports = app

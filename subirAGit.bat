@@ -1,4 +1,4 @@
-call ./Scripts/ScriptDOSGenerarBackupUtopianett.bat
+call ./Scripts/ScriptDOSGenerarBackupDatabaset.bat
 echo "Generando backup de la base de datos"
 TIMEOUT /T 4
 @echo off

@@ -5,6 +5,6 @@ const express = require('express')
 
  const api = express.Router()
 
- api.get('/principal', getPrincipal)
+ api.get('/', getPrincipal)
 
  module.exports = api
