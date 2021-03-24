@@ -6,4 +6,4 @@ set hora=%hora: =0%
 set minuto=%time:~3,2%
 set segundo=%time:~6,2%
 
-mongodump -d %database_name% -o ./%database_name%DB_backup_%mydate%_%hora%.%minuto%.%segundo%
+mongodump -d %database_name% -o ./Database/%database_name%DB_backup_%mydate%_%hora%.%minuto%.%segundo%
