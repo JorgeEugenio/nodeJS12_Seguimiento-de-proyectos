@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import { reactive } from 'vue';
 import router from './router';
 import App from './App.vue';
+//import App from './views/Login';
 import AutoComplete from 'primevue/autocomplete';
 import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
