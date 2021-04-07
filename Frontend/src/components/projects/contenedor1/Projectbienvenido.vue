@@ -2,8 +2,7 @@
 	<div class="p-grid">
 		<div class="p-col-12">
 			<div class="card">
-				<h5>Projects</h5>
-				<p>Pagina por implementar.</p>
+				<h5>Bienvenidos a Projects</h5>
 			</div>
 		</div>
 	</div>

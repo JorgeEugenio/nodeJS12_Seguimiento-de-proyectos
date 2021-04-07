@@ -1,10 +1,10 @@
 <template>
 	<div class="layout-profile">
 		<div>
-			<img src="assets/layout/images/profile.png" alt="" />
+			<img :src="usuario.imgUrl" alt="" />
 		</div>
 		<button class="p-link layout-profile-link" @click="onClick">
-			<span class="username">{{usuario}}</span>
+			<span class="username">{{usuario.nombres + ' ' + usuario.apellidos}}</span>
 			<i class="pi pi-fw pi-cog"></i>
 		</button>
         <transition name="layout-submenu-wrapper">
@@ -21,7 +21,7 @@
 <script>
 	export default {
 		props:{
-			usuario: String
+			usuario: Object
 		},
 		data() {
 			return {

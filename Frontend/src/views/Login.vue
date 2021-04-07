@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import auth from '../service/auth'
+import auth from '../service/authenticacion/auth'
 class Usuario{
     constructor(nombres = '', apellidos = '', email = '', password = ''){
         this.nombres = nombres,

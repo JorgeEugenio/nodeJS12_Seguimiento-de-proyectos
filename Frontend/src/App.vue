@@ -16,7 +16,7 @@
                         </router-link>
                     </div>
 
-                    <AppProfile v-on:estadoProfile="cambiarEstadoProfile" :usuario="user.nombres +' '+ user.apellidos"/>
+                    <AppProfile v-on:estadoProfile="cambiarEstadoProfile" :usuario="user" />
                     <AppMenu :model="menu" @menuitem-click="onMenuItemClick" />
                 </div>
             </transition>
@@ -43,7 +43,7 @@ import AppFooter from './AppFooter.vue';
 import Login from './views/Login'
 import Register from './views/Register.vue';
 
-import auth from './service/auth'
+import auth from './service/authenticacion/auth'
 export default {
     data() {
         return {
@@ -58,7 +58,7 @@ export default {
 					label: 'Pages', icon: 'pi pi-fw pi-clone',
 					items: [
 						{label: 'Projects', icon: 'pi pi-fw pi-user-edit', to: '/projects'},
-						{label: 'Login', icon: 'pi pi-fw pi-calendar-plus', to: '/login'},
+                        {label: 'Users', icon: 'pi pi-fw pi-user-edit', to: '/users'},
 					]
                 }
             ],

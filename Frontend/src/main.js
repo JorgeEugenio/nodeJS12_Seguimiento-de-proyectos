@@ -97,6 +97,7 @@ const app = createApp(App);
 
 app.config.globalProperties.$appState = reactive({ inputStyle: 'outlined' });
 app.config.globalProperties.$primevue = reactive({ ripple: true });
+app.config.globalProperties.$session = null
 
 app.use(ToastService);
 app.use(router);

@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const User = require('../models/User.js')
 
 async function addUser(req,res){
@@ -16,6 +17,11 @@ async function addUser(req,res){
             email,
             password
         })
+
+        if (req.file) {
+            const { filename } = req.file
+            usuario.setImgUrl(filename)
+        }
         await usuario.save()
         res.status(201).json(usuario)
     } catch (e) {
@@ -26,12 +32,26 @@ async function addUser(req,res){
 async function getUsers(req,res){
     try {
         const usuarios = await User.aggregate()
+                                    .lookup({
+                                        from: 'permisos',
+                                        localField: 'idPermiso',
+                                        foreignField: '_id',
+                                        as: 'detalles'
+                                    })
+                                    .replaceRoot({
+                                        detalles: { $mergeObjects: [{$arrayElemAt: ["$detalles",0]}, "$$ROOT"]}
+                                    })
                                     .project({
-                                        "nombres":"$nombres",
-                                        "apellidos":"$apellidos",
-                                        "email":"$email",        
-                                        "createdAt":"$createdAt",
-                                        "updatedAt":"$updatedAt",
+                                        "_id":"$detalles._id",
+                                        "idPermiso":"$detalles.idPermiso", 
+                                        "nombrePermiso":"$detalles.nombrePermiso", 
+                                        "detallePermiso":"$detalles.detallePermiso", 
+                                        "nombres":"$detalles.nombres",
+                                        "apellidos":"$detalles.apellidos",
+                                        "email":"$detalles.email",        
+                                        "imgUrl":"$detalles.imgUrl",        
+                                        "createdAt":"$detalles.createdAt",
+                                        "updatedAt":"$detalles.updatedAt",
                                     })
         res.status(200).json(usuarios)
     } catch (e) {
@@ -49,7 +69,8 @@ async function getUserxEmail(req,res){
                                 "_id": "1",
                                 "nombres":"$nombres",
                                 "apellidos":"$apellidos",
-                                "email":"$email"
+                                "email":"$email",
+                                "imgUrl":"$imgUrl",
                             })
         res.json(usuario)
     } catch (e) {
@@ -57,7 +78,7 @@ async function getUserxEmail(req,res){
     }
 }
 
-async function getUser(req,res){
+async function getUserEmailPassword(req,res){
     try {
         const usuario = await User.aggregate()
                             .match({
@@ -68,7 +89,8 @@ async function getUser(req,res){
                                 "_id": "1",
                                 "nombres":"$nombres",
                                 "apellidos":"$apellidos",
-                                "email":"$email"
+                                "email":"$email",
+                                "imgUrl":"$imgUrl",
                             })
         res.json(usuario)
     } catch (e) {
@@ -84,6 +106,17 @@ async function updateUser(req,res){
         res.status(500).json({ message: e.message})
     }
 }
+async function updateUserxEmail(req,res){
+    try {
+        console.log(req.params);
+        console.log(req.body);
+        await User.findOneAndUpdate({ email : req.params.email}, req.body)
+        
+        res.json({status: 'Usuario Actualizado'})
+    } catch (e) {
+        res.status(500).json({ message: e.message})
+    }
+}
 
 async function deleteUser(req,res){
     try {
@@ -93,11 +126,45 @@ async function deleteUser(req,res){
         res.status(500).json({ message: e.message})
     }
 }
+
+async function getUserxId(req,res){
+    try {
+        const usuario = await User.aggregate()
+                            .match({"_id": mongoose.Types.ObjectId(req.params.id)})
+                            .lookup({
+                                from: 'permisos',
+                                localField: 'idPermiso',
+                                foreignField: '_id',
+                                as: 'detalles'
+                            })
+                            .replaceRoot({
+                                detalles: { $mergeObjects: [{$arrayElemAt: ["$detalles",0]}, "$$ROOT"]}
+                            })
+                            .project({
+                                "_id":"$detalles._id",
+                                "idPermiso":"$detalles.idPermiso", 
+                                "nombrePermiso":"$detalles.nombrePermiso", 
+                                "detallePermiso":"$detalles.detallePermiso", 
+                                "nombres":"$detalles.nombres",
+                                "apellidos":"$detalles.apellidos",
+                                "email":"$detalles.email",        
+                                "imgUrl":"$detalles.imgUrl",        
+                                "createdAt":"$detalles.createdAt",
+                                "updatedAt":"$detalles.updatedAt",
+                            })
+        res.json(usuario[0])
+    } catch (e) {
+        res.status(500).json({ message: e. message})
+    }
+}
+
 module.exports = {
     addUser,
     getUsers,
     getUserxEmail,
-    getUser,
+    getUserEmailPassword,
     updateUser,
-    deleteUser
+    updateUserxEmail,
+    deleteUser,
+    getUserxId
 }

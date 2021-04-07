@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const ENDPOINT_PATH = "http://localhost:8110/";
+const { ENDPOINT_PATH } = require('../Config')
 
 export default {
   register(nombres, apellidos, email, password) {

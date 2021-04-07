@@ -25,7 +25,7 @@ const routes = [
     {
         path: '/account',
         name: 'account',
-        component: () => import('./components/Account'),
+        component: () => import('./components/account/Account'),
     },
     {
         path: '/notificaciones',
@@ -35,7 +35,12 @@ const routes = [
     {
         path: '/projects',
         name: 'projects',
-        component: () => import('./components/projects/ContenedorProject'),
+        component: () => import('./components/projects/contenedor1/ContenedorProject'),
+    },
+    {
+        path: '/users',
+        name: 'users',
+        component: () => import('./components/account/Admin'),
     },
 ];
 

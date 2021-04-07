@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import auth from '../service/auth'
+import auth from '../service/authenticacion/auth'
 export default {
   data: () => ({
     nombres: '',
